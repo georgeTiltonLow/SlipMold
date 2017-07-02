@@ -1,5 +1,5 @@
 //This is where the part with the hole begins
-$fn=20;
+$fn=100;
 dRad=25;
 dHeight=15;
 dThickness=dHeight;
