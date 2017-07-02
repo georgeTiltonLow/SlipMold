@@ -36,5 +36,33 @@ module donutHalf( hole )
    } 
 }
 
-donutHalf(true);
+module innerDonut()
+{
+    difference()
+    {
+        union(){
+    union(){
+    difference(){
+        
+       rotate_extrude(convexity = 15)
+       translate([dThickness/2+dRad/2, 0, 0])
+       circle(r = dHeight/2-moldThickness);
+       
+        translate([0,0,50])
+        cube([200,200,100],center=true);
+    }
+    translate([0,0,moldThickness/2]) cylinder(moldThickness,moldOuterRad
+    ,moldOuterRad,center=true);
+}
+     //connector
+     cylinder(moldThickness*2,intRad,intRad, center=true);
+    }
+    
+    
+    // pour hole
+    translate([dRad/2,dRad/2,0]) cylinder(500,2,2, center=true);    		 
+  }
+}
 
+//donutHalf(true);
+color("blue") innerDonut();
