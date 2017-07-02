@@ -1,52 +1,40 @@
 //This is where the part with the hole begins
-$fn=100;
-render(convexity=100)
-union(){
-difference(){
-    difference(){
+$fn=20;
+dRad=25;
+dHeight=15;
+dThickness=dHeight;
+intRad=5;
+moldThickness=3;
+moldOuterRad=dRad+moldThickness;
+
+module donutHalf( hole )
+{
+   render(convexity=100)
+   union(){
+      difference(){
         difference(){
-                translate([0,0,2.5])
-                difference(){
-                   
-                    cylinder(5,3,3, center=true);
-                    cylinder(5,1, center=true);
-                            }
-                difference(){
-                    rotate_extrude(convexity = 15)
-                    translate([2, 0, 0])
-                    circle(r = 0.75);
-                            }
+           difference(){
+              translate([0,0,2.5])  difference(){
+                    // mold outside cylinder
+                    cylinder(dHeight+moldThickness*2,moldOuterRad,moldOuterRad, center=true);
+                    // mold hole
+                    cylinder(dHeight+moldThickness*2,intRad,intRad, center=true);
                     }
-     translate([0,0,2])
-     cube([3,3,5],center=false);
-    }
-//Pour hole
-translate([1.5,1.5,0])
-cylinder(3,0.125,0.125, center=false);    
-}
-}
-//This is where the part with the hole ends and the remaining half begins
-render(convexity=100)
-rotate(a=180,180,180)
-translate([0,0,-5])
-union(){
-        difference(){
-        difference(){
-                translate([0,0,2.5])
-                difference(){
-                    cylinder(5,3,3, center=true);
-                    cylinder(5,1, center=true);
-                            }
-                difference(){
+              difference(){
+                    // donut
                     rotate_extrude(convexity = 15)
-                    translate([2, 0, 0])
-                    circle(r = 0.75);
-                            }
-                    }
-     translate([0,0,2])
-     cube([3,3,5],center=false);
-    }
-//Connector
-        cylinder(10,1, center=true);
+                    translate([dThickness/2+dRad/2, 0, 0])
+                    circle(r = dHeight/2);
+                  }
+            }
+        translate([0,0,50])
+        cube([200,200,100],center=true);
+        }
+      //Pour hole
+      //if (hole) translate([1.5,1.5,0]) cylinder(3,0.125,0.125, center=false);    
+      }
+   } 
 }
-//This is where the central element is created
+
+donutHalf(true);
+
