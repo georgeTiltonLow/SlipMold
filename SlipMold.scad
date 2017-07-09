@@ -1,8 +1,8 @@
 $fn=150;
 
 //Systems of Equations for the variables. The only variables which may be directly altered are the thickness and the outer radius.
-dTh=35;
-dOutRad=50;
+dTh=50;
+dOutRad=75;
 dIntRad=dOutRad-dTh;
 dXTrans=dOutRad-dTh/2;
 
@@ -37,6 +37,10 @@ mold2ZTrans=-1*mold2H/2;
 pourHoleRad=7.5;
 pourHoleH=sdTh+mold2H;
 
+//Connector buffer
+
+connectBuff=1;
+
 //Components related to the concave portion
 
 //Here is the positive of the full convex donut:
@@ -66,6 +70,10 @@ module connector(){
 //translate([0,0,connectZTrans])
 cylinder(connectH,connectRad,connectRad, center=true);    
 }
+//Here's the connector with a buffer for the differencing to allow for some more room for a comfortable fit:
+module connectorWRoom(){
+ cylinder(connectH, connectRad+connectBuff, connectRad+connectBuff, center=true);   
+}
 //Pour hole cylinder to be cut out of the larger mold
 module pourHole(){
 translate([dXTrans,0,0])
@@ -84,7 +92,7 @@ union(){
                     smallDonutConvex();
                     diffMold2();
                     }
-            connector();
+            connectorWRoom();
             }
 }
 pourHole();
@@ -93,7 +101,7 @@ pourHole();
 //Below is the whole concave section module.
 module concave(){
 difference(){
-//Below is cutting the donut out of the moldinder
+//Below is cutting the donut out of the cylinder
 difference(){
 diffMold();
 donutWhole();
